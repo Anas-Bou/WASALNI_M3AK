@@ -26,6 +26,12 @@ export default function Navbar() {
             </Link>
           </div>
           <div className="flex items-center space-x-4">
+            <Link to="/offers" className="text-gray-600 hover:text-gray-900">
+                Trouver un voyage
+              </Link>
+              {/* Plus tard: "Envoyer un colis" */}
+          </div>
+          <div className="flex items-center space-x-4">
             {loading ? (
               <div className="h-6 w-20 bg-gray-200 rounded animate-pulse"></div>
             ) : user ? (

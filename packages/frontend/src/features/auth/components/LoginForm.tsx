@@ -1,22 +1,21 @@
-// Le chemin de ce fichier est : src/features/auth/components/LoginForm.tsx
+// src/features/auth/components/LoginForm.tsx
 
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { auth } from '@/lib/firebase'
 import { signInWithEmailAndPassword } from 'firebase/auth'
+import { useNavigate } from 'react-router-dom' // Assurez-vous que cet import est présent
 
-// 1. Schéma de validation
 const loginSchema = z.object({
   email: z.string().email({ message: 'Adresse e-mail invalide' }),
   password: z.string().min(6, { message: 'Le mot de passe doit contenir au moins 6 caractères' }),
 })
 
-// 2. Type des données du formulaire
 type LoginFormInputs = z.infer<typeof loginSchema>
 
-// 3. Le composant React lui-même
 export default function LoginForm() {
+  const navigate = useNavigate() // Assurez-vous que cette ligne est présente
   const {
     register,
     handleSubmit,
@@ -26,23 +25,28 @@ export default function LoginForm() {
     resolver: zodResolver(loginSchema),
   })
 
-  // 4. Fonction de soumission
+  // ---- LA SEULE ET UNIQUE DÉCLARATION DE onSubmit ----
   const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, data.email, data.password)
       console.log('Utilisateur connecté:', userCredential.user)
-      alert(`Connexion réussie pour ${userCredential.user.email}!`)
+      
+      // Rediriger vers le tableau de bord
+      navigate('/dashboard')
+
     } catch (error: any) {
+      console.error('Erreur de connexion:', error.code)
       setError('root', {
         type: 'manual',
         message: 'Email ou mot de passe incorrect.',
       })
     }
   }
+  // ---- FIN DE LA DÉCLARATION ----
 
-  // 5. Le JSX (le HTML) qui est affiché
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-6">
+      {/* ... Le reste du JSX ne change pas ... */}
       <div className="rounded-md shadow-sm -space-y-px">
         <div>
           <label htmlFor="email" className="sr-only">Email</label>
@@ -78,7 +82,7 @@ export default function LoginForm() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:bg-primary-300"
+          className="group submit-button"
         >
           {isSubmitting ? 'Connexion...' : 'Se connecter'}
         </button>
