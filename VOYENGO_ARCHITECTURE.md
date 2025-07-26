@@ -25,7 +25,7 @@
 
 ### DevOps & Tools
 - **Version Control**: Git (Monorepo structure)
-- **Package Manager**: pnpm (workspace support)
+- **Package Manager**: npm (workspace support)
 - **Linting**: ESLint + Prettier
 - **Testing**: Vitest (frontend) + Jest (backend)
 - **CI/CD**: GitHub Actions
@@ -75,7 +75,7 @@ voyengo/
 │   └── workflows/               # GitHub Actions
 ├── docs/                        # Documentation
 ├── scripts/                     # Scripts de build/deploy
-├── pnpm-workspace.yaml
+├── npm-workspace.yaml
 ├── .gitignore
 ├── .env.example
 └── README.md
