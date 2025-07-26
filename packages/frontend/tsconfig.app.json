@@ -1,0 +1,15 @@
+// packages/frontend/tsconfig.app.json
+
+{
+  "extends": "../../tsconfig.base.json", // <-- Hérite de notre config de base
+  "compilerOptions": {
+    "composite": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".", // <-- Important pour que les paths fonctionnent
+    "paths": {
+      "@/*": ["./src/*"] // <-- Notre alias pour les imports
+    }
+  },
+  "include": ["src"],
+  "references": []
+}

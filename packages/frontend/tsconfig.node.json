@@ -1,0 +1,12 @@
+// packages/frontend/tsconfig.node.json
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true,
+    "types": ["node"] 
+  },
+  "include": ["vite.config.ts"]
+}

@@ -1,0 +1,13 @@
+// packages/backend/tsconfig.json
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist", // Où placer les fichiers compilés pour la production
+    "rootDir": "src", // Où se trouve notre code source
+    "paths": {
+      "@/*": ["./src/*"] // Ajout de l'alias pour le backend
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}
