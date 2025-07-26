@@ -12,6 +12,8 @@ import OffersListPage from '@/pages/OffersListPage' // <-- Importer
 import OfferDetailPage from '@/pages/OfferDetailPage'
 import ChatPage from '@/pages/ChatPage' // <-- Importer
 import MessagesListPage from '@/pages/MessagesListPage'
+import AdminRoute from '@/features/auth/components/AdminRoute'
+import AdminDashboardPage from '@/pages/AdminDashboardPage'
 
 
 
@@ -34,6 +36,10 @@ function App() {
               <Route path="/offers/create" element={<CreateOfferPage />} />
               <Route path="/messages" element={<MessagesListPage />} />
               <Route path="/messages/:conversationId" element={<ChatPage />} />
+            </Route>
+            {/* --- ROUTES ADMIN --- */}
+            <Route element={<AdminRoute />}>
+              <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
             </Route>
           </Route>
         </Routes>

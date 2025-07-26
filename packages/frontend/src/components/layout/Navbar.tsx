@@ -45,6 +45,11 @@ export default function Navbar() {
                 <Link to="/messages" className="text-gray-600 hover:text-gray-900">
                   Messages
                 </Link>
+                {user && user.isAdmin && (
+                  <Link to="/admin/dashboard" className="font-bold text-red-500 hover:text-red-700">
+                      Admin
+                  </Link>
+                )}
                 <button
                   onClick={handleLogout}
                   className="px-3 py-2 bg-red-500 text-white text-sm font-medium rounded-md hover:bg-red-600"

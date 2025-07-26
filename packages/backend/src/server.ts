@@ -1,8 +1,11 @@
 // packages/backend/src/server.ts
-
+import 'dotenv/config'
+import './config/firebaseAdmin' 
 import Fastify from 'fastify'
 import cors from '@fastify/cors'
 import helmet from '@fastify/helmet'
+import { adminRoutes } from './modules/admin/admin.routes' // <-- Importer
+
 
 // Crée une instance du serveur Fastify
 const server = Fastify({
@@ -20,6 +23,8 @@ server.register(cors, {
 server.get('/api/health', async (request, reply) => {
   return { status: 'ok', message: 'VOYENGO API is running!' }
 })
+
+server.register(adminRoutes, { prefix: '/api/admin' })
 
 // Fonction pour démarrer le serveur
 const start = async () => {

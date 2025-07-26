@@ -5,6 +5,9 @@ import { z } from 'zod'
 import { auth } from '@/lib/firebase'
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom'
+import { db } from '@/lib/firebase' // <-- Assurez-vous que db est importé
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore'
+
 
 // 1. Schéma de validation avec confirmation de mot de passe
 const registerSchema = z
@@ -43,7 +46,14 @@ export default function RegisterForm() {
 
       console.log('Utilisateur créé:', userCredential.user)
       // L'AuthProvider mettra à jour l'état Redux automatiquement
-      
+      const userDocRef = doc(db, 'users', userCredential.user.uid)
+        await setDoc(userDocRef, {
+          uid: userCredential.user.uid,
+          displayName: data.displayName,
+          email: data.email,
+          role: 'user', // Rôle par défaut
+          createdAt: serverTimestamp(),
+    })
       // Rediriger vers le tableau de bord après l'inscription
       navigate('/dashboard')
 

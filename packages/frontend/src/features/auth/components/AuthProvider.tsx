@@ -4,6 +4,7 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from '@/lib/firebase'
 import { useAppDispatch } from '@/hooks/reduxHooks' // On va créer ce hook
 import { setUser } from '@/features/auth/authSlice'
+import { onIdTokenChanged } from 'firebase/auth'
 
 interface AuthProviderProps {
   children: React.ReactNode
@@ -13,24 +14,19 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    // onAuthStateChanged est un écouteur de Firebase qui se déclenche
-    // à la connexion, à la déconnexion, et au chargement initial de la page.
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+    const unsubscribe = onIdTokenChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
-        // L'utilisateur est connecté
+        const tokenResult = await firebaseUser.getIdTokenResult()
         dispatch(setUser({
           uid: firebaseUser.uid,
           email: firebaseUser.email,
           displayName: firebaseUser.displayName,
+          isAdmin: tokenResult.claims.admin === true, // <-- Lire le claim ici
         }))
       } else {
-        // L'utilisateur est déconnecté
         dispatch(setUser(null))
       }
     })
-
-    // On retourne la fonction de nettoyage pour se désabonner de l'écouteur
-    // quand le composant est démonté.
     return () => unsubscribe()
   }, [dispatch])
 

@@ -8,6 +8,8 @@ interface AuthUser {
   uid: string
   email: string | null
   displayName: string | null
+  isAdmin: boolean // <-- Ajouter ce champ
+
 }
 
 // Définir la forme de l'état de notre slice
