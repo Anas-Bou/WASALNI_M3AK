@@ -10,6 +10,9 @@ import RegisterPage from '@/features/auth/pages/RegisterPage' // <-- Importer
 import CreateOfferPage from '@/pages/CreateOfferPage'
 import OffersListPage from '@/pages/OffersListPage' // <-- Importer
 import OfferDetailPage from '@/pages/OfferDetailPage'
+import ChatPage from '@/pages/ChatPage' // <-- Importer
+import MessagesListPage from '@/pages/MessagesListPage'
+
 
 
 function App() {
@@ -29,6 +32,8 @@ function App() {
             <Route element={<ProtectedRoute />}>
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/offers/create" element={<CreateOfferPage />} />
+              <Route path="/messages" element={<MessagesListPage />} />
+              <Route path="/messages/:conversationId" element={<ChatPage />} />
             </Route>
           </Route>
         </Routes>

@@ -76,7 +76,7 @@ export default function RegisterForm() {
       {errors.root && <p className="error-text text-center">{errors.root.message}</p>}
 
       <div>
-        <button type="submit" disabled={isSubmitting} className="group submit-button">
+        <button type="submit" disabled={isSubmitting} className="group submit-button w-full">
           {isSubmitting ? 'Inscription...' : 'S\'inscrire'}
         </button>
       </div>

@@ -82,7 +82,7 @@ export default function LoginForm() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="group submit-button"
+          className="group submit-button w-full"
         >
           {isSubmitting ? 'Connexion...' : 'Se connecter'}
         </button>

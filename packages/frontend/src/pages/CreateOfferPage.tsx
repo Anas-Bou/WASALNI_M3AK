@@ -27,6 +27,8 @@ export default function CreateOfferPage() {
     try {
       const offerData = {
         ...data,
+        search_from_city: data.route.from.city.toLowerCase(),
+        search_to_city: data.route.to.city.toLowerCase(),
         userId: user.uid,
         author: {
           displayName: user.displayName,

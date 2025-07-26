@@ -38,8 +38,12 @@ export default function Navbar() {
               // Si l'utilisateur est connecté
               <>
                 <span>Bonjour, {user.displayName || user.email}</span>
+                
                 <Link to="/dashboard" className="text-gray-600 hover:text-gray-900">
                   Dashboard
+                </Link>
+                <Link to="/messages" className="text-gray-600 hover:text-gray-900">
+                  Messages
                 </Link>
                 <button
                   onClick={handleLogout}
