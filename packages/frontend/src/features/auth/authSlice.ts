@@ -4,16 +4,17 @@ import type { User } from 'firebase/auth'
 
 // Définir la forme des données utilisateur que nous voulons stocker
 // On ne stocke pas tout l'objet User de Firebase, juste ce qui est utile
-interface AuthUser {
+export interface AuthUser {
   uid: string
   email: string | null
   displayName: string | null
+  photoURL?: string | null
   isAdmin: boolean // <-- Ajouter ce champ
 
 }
 
 // Définir la forme de l'état de notre slice
-interface AuthState {
+export interface AuthState {
   user: AuthUser | null
   loading: boolean
 }

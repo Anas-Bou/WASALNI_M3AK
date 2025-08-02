@@ -18,7 +18,7 @@ export const travelOfferSchema = z.object({
     to: locationSchema,
   }),
 
-  travelDate: z.string().refine((date) => !isNaN(Date.parse(date)), {
+  travelDate: z.union([z.string(), z.date()]).refine(val => !isNaN(Date.parse(val.toString())), {
     message: "Date de voyage invalide",
   }),
   
@@ -28,7 +28,7 @@ export const travelOfferSchema = z.object({
   
   pricing: z.object({
     pricePerKg: z.number().min(0, 'Le prix doit être positif'),
-    currency: z.string().default('EUR'),
+    currency: z.string(), // On enlève .default('EUR') pour que ce soit toujours requis
   }),
 
   description: z.string().max(500, 'La description ne doit pas dépasser 500 caractères').optional(),

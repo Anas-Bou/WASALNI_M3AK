@@ -8,14 +8,14 @@ interface FirestoreTimestamp {
 }
 
 // On étend le type partagé pour inclure les champs ajoutés par le serveur
-export interface TravelOfferWithId extends SharedTravelOffer {
+export interface TravelOfferWithId extends Omit<SharedTravelOffer, 'travelDate'> {
   id: string
   userId: string
   author: {
     displayName: string | null
-    // photoURL?: string | null
+    photoURL?: string | null
   }
-  status: 'active' | 'completed' | 'cancelled'
+  status: 'active' | 'completed' | 'cancelled' | 'archived'
   createdAt: FirestoreTimestamp
-  travelDate: FirestoreTimestamp // Firestore convertit les Dates en Timestamps
+  travelDate: FirestoreTimestamp // Maintenant il n'y a plus de conflit
 }
