@@ -6,6 +6,8 @@ import { db } from '@/lib/firebase'
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
 import { useAppSelector } from '@/hooks/reduxHooks'
 import { useNavigate } from 'react-router-dom'
+import type { FieldErrors } from 'react-hook-form'; // Import pour un typage plus strict
+
 
 export default function CreateOfferPage() {
   const navigate = useNavigate()
@@ -16,13 +18,24 @@ export default function CreateOfferPage() {
     formState: { errors, isSubmitting },
   } = useForm<TravelOffer>({
     resolver: zodResolver(travelOfferSchema),
-  })
+    defaultValues: {
+      pricing: {
+        currency: 'EUR',
+      }
+    }
+  });
+
+  const onValidationErrors = (validationErrors: FieldErrors<TravelOffer>) => {
+    console.error("Échec de la validation du formulaire:", validationErrors);
+  };
 
   const onSubmit: SubmitHandler<TravelOffer> = async (data) => {
     if (!user) {
       alert('Vous devez être connecté pour créer une offre.')
       return
     }
+
+  
 
     try {
       const offerData = {
@@ -39,7 +52,7 @@ export default function CreateOfferPage() {
         // Conversion de la date string en objet Date pour Firestore
         travelDate: new Date(data.travelDate),
       }
-
+      console.log("Données envoyées à Firestore:", offerData);
       const docRef = await addDoc(collection(db, 'offers'), offerData)
       console.log('Offre créée avec ID: ', docRef.id)
       alert('Votre offre a été créée avec succès !')
@@ -54,7 +67,7 @@ export default function CreateOfferPage() {
     <div className="max-w-4xl mx-auto py-10 px-4">
       <h1 className="text-3xl font-bold text-gray-900 mb-8">Créer une nouvelle offre de voyage</h1>
       
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 bg-white p-8 rounded-lg shadow-md">
+      <form onSubmit={handleSubmit(onSubmit, onValidationErrors)} className="space-y-8 bg-white p-8 rounded-lg shadow-md">
         {/* Section Route */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
