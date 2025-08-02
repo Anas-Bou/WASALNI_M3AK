@@ -1,6 +1,7 @@
 // packages/backend/src/modules/admin/admin.routes.ts
 import type { FastifyInstance } from 'fastify'
-import { adminAuth } from '../../config/firebaseAdmin' // <-- Importer notre instance initialisée
+import { adminAuth } from '../../config/firebaseAdmin.js' // <-- Ajoutez .js
+
 
 export async function adminRoutes(server: FastifyInstance) {
   server.post('/set-admin-role', async (request, reply) => {

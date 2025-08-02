@@ -2,8 +2,10 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "dist", // Où placer les fichiers compilés pour la production
-    "rootDir": "src", // Où se trouve notre code source
+    "outDir": "dist",
+    "rootDir": "src",
+    "module": "NodeNext", // <-- MODIFICATION CLÉ
+    "moduleResolution": "NodeNext",
     "paths": {
       "@/*": ["./src/*"] // Ajout de l'alias pour le backend
     }

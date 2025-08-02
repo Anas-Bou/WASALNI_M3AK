@@ -4,7 +4,8 @@ import './config/firebaseAdmin'
 import Fastify from 'fastify'
 import cors from '@fastify/cors'
 import helmet from '@fastify/helmet'
-import { adminRoutes } from './modules/admin/admin.routes' // <-- Importer
+import { adminRoutes } from './modules/admin/admin.routes.js' // <-- Ajoutez .js
+import './config/firebaseAdmin.js' // <-- Ajoutez .js
 
 
 // Crée une instance du serveur Fastify
