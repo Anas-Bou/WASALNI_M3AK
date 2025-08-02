@@ -46,10 +46,8 @@ export default function OfferDetailPage() {
     try {
 
       const conversationId = await createOrGetConversation(
-      currentUser.uid,
       offer.userId,
-      currentUser.displayName, // On passe le nom de l'utilisateur actuel
-      offer.author.displayName // On passe le nom de l'auteur de l'offre
+      offer.author?.displayName || 'Voyageur inconnu'
     )
       navigate(`/messages/${conversationId}`)
     } catch (error) {
