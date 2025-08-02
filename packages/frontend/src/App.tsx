@@ -14,6 +14,8 @@ import ChatPage from '@/pages/ChatPage' // <-- Importer
 import MessagesListPage from '@/pages/MessagesListPage'
 import AdminRoute from '@/features/auth/components/AdminRoute'
 import AdminDashboardPage from '@/pages/AdminDashboardPage'
+import EditOfferPage from '@/pages/EditOfferPage' // <-- Importer
+
 
 
 
@@ -34,6 +36,7 @@ function App() {
             <Route element={<ProtectedRoute />}>
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/offers/create" element={<CreateOfferPage />} />
+              <Route path="/offers/:offerId/edit" element={<EditOfferPage />} /> {/* <-- Ajouter cette ligne */}
               <Route path="/messages" element={<MessagesListPage />} />
               <Route path="/messages/:conversationId" element={<ChatPage />} />
             </Route>

@@ -1,7 +1,8 @@
 // src/pages/DashboardPage.tsx
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { collection, query, where, getDocs, orderBy } from 'firebase/firestore'
+import { collection, query, where, getDocs, orderBy,doc, deleteDoc } from 'firebase/firestore'
+
 import { db } from '@/lib/firebase'
 import { useAppSelector } from '@/hooks/reduxHooks'
 import type { TravelOfferWithId } from '@/types'
@@ -38,6 +39,18 @@ export default function DashboardPage() {
     fetchMyOffers()
   }, [user])
 
+  const handleDeleteOffer = async (offerId: string) => {
+    try {
+      await deleteDoc(doc(db, 'offers', offerId))
+      // Mettre à jour l'état local pour retirer l'offre supprimée
+      setMyOffers(prevOffers => prevOffers.filter(offer => offer.id !== offerId))
+      alert('Offre supprimée avec succès.')
+    } catch (error) {
+      console.error("Erreur lors de la suppression de l'offre:", error)
+      alert('Impossible de supprimer l\'offre.')
+    }
+  }
+
   return (
     <div className="py-10">
       <header>
@@ -58,7 +71,12 @@ export default function DashboardPage() {
           ) : myOffers.length > 0 ? (
             <div className="space-y-4">
               {myOffers.map(offer => (
-                <OfferCard key={offer.id} offer={offer} />
+                <OfferCard 
+                key={offer.id} 
+                offer={offer} 
+                showManagementControls={true} // <-- Nouvelle prop
+                onDelete={handleDeleteOffer}
+                />
               ))}
             </div>
           ) : (

@@ -1,7 +1,8 @@
 // src/features/offers/components/OfferCard.tsx
 import type { TravelOfferWithId } from '@/types'
 import { CalendarDaysIcon, MapPinIcon, ScaleIcon } from '@heroicons/react/24/outline'
-import { Link } from 'react-router-dom'
+import { Link ,useNavigate} from 'react-router-dom'
+import { PencilIcon, TrashIcon } from '@heroicons/react/24/solid'
 
 // Une petite fonction utilitaire pour formater les dates
 const formatDate = (timestamp: { seconds: number }) => {
@@ -14,9 +15,29 @@ const formatDate = (timestamp: { seconds: number }) => {
 
 interface OfferCardProps {
   offer: TravelOfferWithId
+  showManagementControls?: boolean // <-- Rendre la prop optionnelle
+  onDelete?: (offerId: string) => void 
 }
 
-export default function OfferCard({ offer }: OfferCardProps) {
+export default function OfferCard({ offer, showManagementControls = false, onDelete }: OfferCardProps) {
+  const navigate = useNavigate()
+
+  const handleDeleteClick = (e: React.MouseEvent) => {
+    e.preventDefault() // Empêche le Link parent de se déclencher
+    e.stopPropagation() // Empêche la propagation de l'événement
+    if (window.confirm('Êtes-vous sûr de vouloir supprimer cette offre ?')) {
+      onDelete?.(offer.id)
+    }
+  }
+
+  const handleEditClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    // On va créer cette page plus tard
+    navigate(`/offers/${offer.id}/edit`)
+  }
+
+
   return (
     <Link to={`/offers/${offer.id}`} className="block">
         <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden">
@@ -66,6 +87,16 @@ export default function OfferCard({ offer }: OfferCardProps) {
             Voir l'offre et contacter
             </button>
         </div>
+        {showManagementControls && (
+          <div className="bg-gray-50 px-6 py-3 flex justify-end space-x-2">
+            <button onClick={handleEditClick} className="p-2 rounded-full hover:bg-gray-200 transition-colors">
+              <PencilIcon className="h-5 w-5 text-gray-600" />
+            </button>
+            <button onClick={handleDeleteClick} className="p-2 rounded-full hover:bg-gray-200 transition-colors">
+              <TrashIcon className="h-5 w-5 text-red-500" />
+            </button>
+          </div>
+        )}
         </div>
     </Link>
   )
